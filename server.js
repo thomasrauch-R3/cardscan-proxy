@@ -84,7 +84,11 @@ app.post('/api/analyze', auth, async (req, res) => {
         ? ` cache_read:${u.cache_read_input_tokens||0} cache_write:${u.cache_creation_input_tokens||0}`
         : '';
       console.log(`[${new Date().toISOString()}] ${body.model} in:${u.input_tokens} out:${u.output_tokens}${cacheInfo}`);
+      // Debug: vollständiges Usage-Objekt loggen
+      console.log(`  usage: ${JSON.stringify(u)}`);
     }
+    // Debug: welche Felder im Request vorhanden?
+    console.log(`  request: system=${!!body.system} cache_control=${!!body.cache_control} msgs=${body.messages?.length} tools=${!!body.tools}`);
     res.status(upstream.status).json(data);
 
   } catch (err) {
