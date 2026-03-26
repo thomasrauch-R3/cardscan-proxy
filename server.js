@@ -122,6 +122,23 @@ app.get('/health', (_, res) => res.json({
   name: 'CardScan Proxy',
 }));
 
+// ── Update-Check: Aktuelle App-Version + Download-URL ────────────────────────
+/**
+ * GET /update
+ * Gibt die aktuelle App-Version und Download-URL zurück.
+ * Konfigurierbar über Umgebungsvariablen auf Render.com:
+ *   APP_VERSION=2.2.0
+ *   APP_DOWNLOAD_MAC=https://github.com/thomasrauch-R3/cardscan-app/releases/download/v2.2.0/CardScan-2.2.0.dmg
+ *   APP_DOWNLOAD_WIN=https://github.com/thomasrauch-R3/cardscan-app/releases/download/v2.2.0/cardscan-app.zip
+ *   APP_CHANGELOG=Dark Mode, Re-Scan, Statistik-Dashboard
+ */
+app.get('/update', (_, res) => res.json({
+  version:   process.env.APP_VERSION || '2.1.0',
+  downloadMac: process.env.APP_DOWNLOAD_MAC || '',
+  downloadWin: process.env.APP_DOWNLOAD_WIN || '',
+  changelog: process.env.APP_CHANGELOG || '',
+}));
+
 // ── Haupt-API-Endpunkt ──────────────────────────────────────────────────────
 /**
  * POST /api/analyze
